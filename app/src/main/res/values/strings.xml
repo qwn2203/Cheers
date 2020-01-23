@@ -5,4 +5,21 @@
     <string name="bebidas">Bebidas</string>
     <string name="crear_bebidas">Crear Bebidas</string>
     <string name="inventario">Inventario</string>
+
+    <string-array name="alcoholes">
+        <item>Bebida 1</item>
+        <item>Bebida 2</item>
+        <item>Bebida 3</item>
+        <item>Vacio</item>
+    </string-array>
+
+    <string name="mezcladores">Elige tus mezclas</string>
+    <string-array name="mixes">
+        <item>Mezclador 1</item>
+        <item>Mezclador 2</item>
+        <item>Mezclador 3</item>
+        <item>Mezclador 4</item>
+        <item>Mezclador 5</item>
+        <item>Vacio</item>
+    </string-array>
 </resources>

@@ -9,7 +9,7 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
-public class FavoritesActivity extends AppCompatActivity {
+public class DrinksActivity extends AppCompatActivity {
     RecyclerView recycler;
     AlcoholAdapter adapter;
     ArrayList<Drink> alcohols;
@@ -17,17 +17,17 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorites);
+        setContentView(R.layout.activity_drinks);
         setTitle("Favoritos");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        recycler = findViewById(R.id.favoritesRecyclerView);
+        recycler = findViewById(R.id.drinksRecyclerView);
         alcohols = new ArrayList<>();
         fillData();
-        adapter = new AlcoholAdapter(alcohols,getApplication(),R.drawable.favorite);
+        adapter = new AlcoholAdapter(alcohols,getApplication(),R.drawable.favorite_empty);
         recycler.setAdapter(adapter);
         recycler.addItemDecoration(new DividerItemDecoration(recycler.getContext(), DividerItemDecoration.VERTICAL));
 
-        recycler.setLayoutManager(new LinearLayoutManager(FavoritesActivity.this));
+        recycler.setLayoutManager(new LinearLayoutManager(DrinksActivity.this));
     }
 
     private void fillData(){
