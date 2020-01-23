@@ -3,11 +3,12 @@ package com.example.cheers;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class homeActivity extends AppCompatActivity {
+public class homeActivity extends Activity {
     CardView crearBebida, favoritos, bebidas, inventario;
 
     @Override
@@ -15,6 +16,7 @@ public class homeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         //Enlazar objetos con UI
+        crearBebida = findViewById(R.id.crear);
         favoritos = findViewById(R.id.favoritos);
         bebidas = findViewById(R.id.bebidas);
         crearBebida = findViewById(R.id.crear);
@@ -41,14 +43,19 @@ public class homeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-        inventario.setOnClickListener(new View.OnClickListener() {
+        favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(homeActivity.this,InventarioActivity.class);
+                Intent i = new Intent(homeActivity.this, FavoritesActivity.class);
                 startActivity(i);
             }
         });
-
+        inventario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(homeActivity.this, InventarioActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }
