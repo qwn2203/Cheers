@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InventarioActivity"></activity>
-        <activity android:name=".DrinksActivity" />
-        <activity android:name=".FavoritesActivity" />
-        <activity android:name=".CreateDrinkActivity" />
+        <activity android:name=".Activity.InventarioActivity"></activity>
+        <activity android:name=".Activity.DrinksActivity" />
+        <activity android:name=".Activity.FavoritesActivity" />
+        <activity android:name=".Activity.CreateDrinkActivity" />
         <activity
-            android:name=".homeActivity"
+            android:name=".Activity.homeActivity"
             android:label="" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".splashActivity">
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.splashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

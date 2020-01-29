@@ -8,7 +8,7 @@
     android:background="@color/gris"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context=".homeActivity">
+    tools:context=".Activity.homeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

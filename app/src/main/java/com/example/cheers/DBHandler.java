@@ -8,8 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.cheers.Objetos.Drink;
+import com.example.cheers.Objetos.DrinkIngredient;
+import com.example.cheers.Objetos.Ingredients;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -61,7 +64,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<Ingredients> findIngredients(){
+    public List<Ingredients> getIngredients(){
         List<Ingredients> ingredients = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("Select * from ingredients;",null );
@@ -69,7 +72,7 @@ public class DBHandler extends SQLiteOpenHelper {
             while(cursor.isAfterLast() == false) {
                 int id = cursor.getInt(cursor.getColumnIndex("id"));
                 String name = cursor.getString(cursor.getColumnIndex("name"));
-                int type = cursor.getInt(cursor.getColumnIndex("id"));
+                int type = cursor.getInt(cursor.getColumnIndex("type"));
 
                 ingredients.add(new Ingredients(id,name,type));
                 cursor.moveToNext();
@@ -78,8 +81,8 @@ public class DBHandler extends SQLiteOpenHelper {
         return ingredients;
     }
 
-    public List<Drink> findDrinks(){
-        List<Drink> drinks = new ArrayList<>();
+    public List<DrinkIngredient> findDrinks(){
+        List<DrinkIngredient> drinks = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("Select * from drinks;",null );
         if(cursor.moveToFirst()){
@@ -89,7 +92,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 String desc = cursor.getString(cursor.getColumnIndex("description"));
                 Drink tmp = new Drink(id,name,desc,null);
 
-                drinks.add(tmp);
+                drinks.add(new DrinkIngredient(tmp));
                 cursor.moveToNext();
             }
         }
@@ -106,21 +109,20 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void findDrinksWithIngredients(int idDrink){
-        int count = 0;
+    public List<Ingredients> findDrinksWithIngredients(int idDrink){
+        List<Ingredients> ingredients = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT id_drink, drinks.name Drink, id_ingredient ,ingredients.name Ingredient, ingredients.type Type, amount Amount FROM drinks_has_ingredients, ingredients, drinks WHERE id_drink = drinks.id and id_ingredient = ingredients.id AND id_drink = " + idDrink +";",null );
+        Cursor cursor = db.rawQuery("SELECT ingredients.id Id, ingredients.name Name, ingredients.type Type from drinks, drinks_has_ingredients, ingredients WHERE drinks.id = id_drink AND ingredients.id = id_ingredient and drinks.id = " + idDrink + ";",null );
         if(cursor.moveToFirst()){
             while(cursor.isAfterLast() == false) {
-                int id = cursor.getInt(cursor.getColumnIndex("id_drink"));
-                String drink = cursor.getString(cursor.getColumnIndex("Drink"));
-                int idIngredient = cursor.getInt(cursor.getColumnIndex("id_ingredient"));
-                String ingredient = cursor.getString(cursor.getColumnIndex("Ingredient"));
-                int amount = cursor.getInt(cursor.getColumnIndex("Amount"));
-                System.out.printf("%d : (%d = %s | %d = %s) --> %d\n",count,id,drink,idIngredient,ingredient,amount);
-                count++;
+                int id_ingredient = cursor.getInt(cursor.getColumnIndex("id_ingredient"));
+                String nameIngredient = cursor.getString(cursor.getColumnIndex("ingredients.name"));
+                int typeIngredient = cursor.getInt(cursor.getColumnIndex("ingredients.type"));
+                ingredients.add(new Ingredients(id_ingredient, nameIngredient, typeIngredient));
                 cursor.moveToNext();
             }
         }
+        System.out.println("Tamaño de arreglo de ingredientes --> " + ingredients.size());
+        return ingredients;
     }
 }

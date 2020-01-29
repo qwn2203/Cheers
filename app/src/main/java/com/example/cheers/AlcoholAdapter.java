@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cheers.Activity.CreateDrinkActivity;
+import com.example.cheers.Objetos.Drink;
+
+
 import java.util.ArrayList;
 
 
@@ -33,9 +37,9 @@ public class AlcoholAdapter extends  RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        CreateDrinkActivity.AlcoholViewHolder alcoholHolder = (CreateDrinkActivity.AlcoholViewHolder)holder;
-        alcoholHolder.name.setText(list.get(position).getName());
-        alcoholHolder.imageView.setImageResource(imageSrc);
+        //CreateDrinkActivity.AlcoholViewHolder alcoholHolder = (CreateDrinkActivity.AlcoholViewHolder)holder;
+        //alcoholHolder.name.setText(list.get(position).getName());
+        //alcoholHolder.imageView.setImageResource(imageSrc);
     }
 
     @Override

@@ -5,55 +5,99 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FAC57D"
-    tools:context=".InventarioActivity">
+    tools:context="Activity.InventarioActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/newDrinkBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="New Drink"
+            android:background="@color/colorPrimary2"
+            android:textColor="#FFFFFF"
+            android:drawableRight="@drawable/ic_add"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:onClick="addNewDrink"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/alcohol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="552dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:text="Alcohol"
-            android:textColor="#000000"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newDrinkBtn"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/dispenser1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Dispenser 1"
+            android:textColor="@color/colorAccent"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alcohol"
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
-            android:id="@+id/img1"
+            android:id="@+id/imageAlcohol1"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dispenser1"
             app:layout_constraintTop_toBottomOf="@+id/alcohol"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/champagne" />
 
         <Spinner
-            android:id="@+id/spinnerA1"
+            android:id="@+id/spinnerAlcohol1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:entries="@array/alcoholes"
             app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/img1"
+            app:layout_constraintStart_toEndOf="@+id/imageAlcohol1"
             app:layout_constraintTop_toBottomOf="@+id/alcohol"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -66,37 +110,57 @@
             android:backgroundTint="#707070"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerA1"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerAlcohol1"
             app:layout_constraintVertical_bias="0.0" />
 
+        <TextView
+        android:id="@+id/dispenser2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Dispenser 2"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider1"
+        app:layout_constraintVertical_bias="0.0" />
+
         <ImageView
-            android:id="@+id/img2"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:id="@+id/imageAlcohol2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dispenser2"
             app:layout_constraintTop_toBottomOf="@+id/divider1"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/champagne" />
 
         <Spinner
-            android:id="@+id/spinnerA2"
+            android:id="@+id/spinnerAlcohol2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:entries="@array/alcoholes"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/divider2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/img2"
+            app:layout_constraintStart_toEndOf="@+id/imageAlcohol2"
             app:layout_constraintTop_toBottomOf="@+id/divider1"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -105,42 +169,61 @@
             android:layout_width="409dp"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="#707070"
             android:backgroundTint="#707070"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerA2"
+            app:layout_constraintTop_toBottomOf="@+id/imageAlcohol2"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/img3"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+        <TextView
+            android:id="@+id/dispenser3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Dispenser 2"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider2"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imageAlcohol3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/dispenser3"
+            app:layout_constraintTop_toBottomOf="@+id/divider2"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/champagne"
-            android:contentDescription="TODO" />
+            app:srcCompat="@drawable/champagne" />
 
         <Spinner
-            android:id="@+id/spinnerA3"
+            android:id="@+id/spinnerAlcohol3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:entries="@array/alcoholes"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/img3"
+            app:layout_constraintStart_toEndOf="@+id/imageAlcohol3"
             app:layout_constraintTop_toBottomOf="@+id/divider2"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -149,22 +232,27 @@
             android:layout_width="409dp"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="#707070"
             android:backgroundTint="#707070"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerA3"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerAlcohol3"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/mezclador"
+            android:id="@+id/mixer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:text="Mezclador"
-            android:textColor="@color/colorAccent"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="20dp"
+            android:text="Mixer"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -172,33 +260,56 @@
             app:layout_constraintTop_toBottomOf="@+id/divider3"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/img4"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+        <!-- Mixer 1 -->
+
+        <TextView
+            android:id="@+id/pump1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Pump 1"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mezclador"
+            app:layout_constraintTop_toBottomOf="@+id/mixer"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imageMixer1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/pump1"
+            app:layout_constraintTop_toBottomOf="@+id/mixer"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/soda" />
 
         <Spinner
-            android:id="@+id/spinnerM1"
+            android:id="@+id/spinnerMixer1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:entries="@array/mixes"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/img4"
-            app:layout_constraintTop_toBottomOf="@+id/mezclador"
+            app:layout_constraintStart_toEndOf="@+id/imageMixer1"
+            app:layout_constraintTop_toBottomOf="@+id/mixer"
             app:layout_constraintVertical_bias="0.0" />
 
         <View
@@ -206,41 +317,64 @@
             android:layout_width="409dp"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="#707070"
             android:backgroundTint="#707070"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerM1"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerMixer1"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/img5"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+        <!-- Mixer 2 -->
+
+        <TextView
+            android:id="@+id/pump2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Pump 2"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider4"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imageMixer2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/pump2"
+            app:layout_constraintTop_toBottomOf="@+id/divider4"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/soda" />
 
         <Spinner
-            android:id="@+id/spinnerM2"
+            android:id="@+id/spinnerMixer2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:entries="@array/mixes"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/img4"
+            app:layout_constraintStart_toEndOf="@+id/imageMixer2"
             app:layout_constraintTop_toBottomOf="@+id/divider4"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -249,41 +383,64 @@
             android:layout_width="409dp"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="#707070"
             android:backgroundTint="#707070"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerM2"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerMixer2"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/img6"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+        <!-- Mixer 3 -->
+
+        <TextView
+            android:id="@+id/pump3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Pump 3"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider5"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/soda" />
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imageMixer3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/soda"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/pump3"
+            app:layout_constraintTop_toBottomOf="@+id/divider5"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Spinner
-            android:id="@+id/spinnerM3"
+            android:id="@+id/spinnerMixer3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:entries="@array/mixes"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/img4"
+            app:layout_constraintStart_toEndOf="@+id/imageMixer3"
             app:layout_constraintTop_toBottomOf="@+id/divider5"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -292,41 +449,64 @@
             android:layout_width="409dp"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="#707070"
             android:backgroundTint="#707070"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerM3"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerMixer3"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/img7"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+        <!-- Mixer 4 -->
+
+        <TextView
+            android:id="@+id/pump4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Pump 4"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider6"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/soda" />
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imageMixer4"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/soda"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/pump4"
+            app:layout_constraintTop_toBottomOf="@+id/divider6"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Spinner
-            android:id="@+id/spinnerM4"
+            android:id="@+id/spinnerMixer4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:entries="@array/mixes"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/img4"
+            app:layout_constraintStart_toEndOf="@+id/imageMixer4"
             app:layout_constraintTop_toBottomOf="@+id/divider6"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -335,41 +515,64 @@
             android:layout_width="409dp"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="#707070"
             android:backgroundTint="#707070"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerM4"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerMixer4"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/img8"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+        <!-- Mixer 5 -->
+
+        <TextView
+            android:id="@+id/pump5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Pump 4"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider7"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/soda" />
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imageMixer5"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/soda"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/pump5"
+            app:layout_constraintTop_toBottomOf="@+id/divider7"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Spinner
-            android:id="@+id/spinnerM5"
+            android:id="@+id/spinnerMixer5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:entries="@array/mixes"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/img4"
+            app:layout_constraintStart_toEndOf="@+id/imageMixer5"
             app:layout_constraintTop_toBottomOf="@+id/divider7"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -378,32 +581,35 @@
             android:layout_width="409dp"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="#707070"
             android:backgroundTint="#707070"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerM5"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerMixer5"
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/guardar"
+            android:id="@+id/saveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="32dp"
-            android:background="@color/colorPrimary"
-            android:text="Guardar"
-            android:onClick="guardar"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/colorPrimary2"
+            android:text="SAVE"
             android:textColor="@android:color/background_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerM5"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toBottomOf="@+id/divider8"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

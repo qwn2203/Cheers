@@ -6,6 +6,12 @@
     <string name="crear_bebidas">Crear Bebidas</string>
     <string name="inventario">Inventario</string>
 
+    <string-array name="types">
+        <item>Select the type of drink</item>
+        <item>Alcohol</item>
+        <item>Mixer</item>
+    </string-array>
+
     <string-array name="alcoholes">
         <item>Bebida 1</item>
         <item>Bebida 2</item>
