@@ -3,27 +3,32 @@ package com.example.cheers;
 import java.util.HashMap;
 
 public class Drink {
+    private int id;
     private String name;
     private String instructions;
-    private HashMap<String, Integer> ingredients;
+
 
     public Drink() {
-        setName("");
-        this.setInstructions("");
-        this.ingredients = new HashMap<>();
+        this.id = 0;
+        this.name = "";
+        this.instructions = "";
+
     }
 
-    Drink(String name, String instructions) {
-        this.setName(name);
+    public Drink(int id, String name, String instructions, HashMap<String, Integer> ingredients) {
+        this.id = id;
+        this.name = name;
         this.instructions = instructions;
+
     }
 
-    public Drink(String name, String instructions, HashMap<String, Integer> ingredients){
-        this.setName(name);
-        this.setInstructions(instructions);
-        this.ingredients = new HashMap<>();
+    public int getId() {
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -41,11 +46,4 @@ public class Drink {
         this.instructions = instructions;
     }
 
-    public HashMap<String, Integer> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(HashMap<String, Integer> ingredients) {
-        this.ingredients = ingredients;
-    }
 }

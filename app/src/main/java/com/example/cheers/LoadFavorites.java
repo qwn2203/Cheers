@@ -34,6 +34,9 @@ public class LoadFavorites {
 
         } catch (FileNotFoundException fnfe){
             try{
+                favorites.setProperty("1","Bebida 1");
+                favorites.setProperty("2","Bebida 2");
+
                 FileOutputStream fos = context.openFileOutput(FAVORITES_FILENAME, Context.MODE_PRIVATE);
                 favorites.storeToXML(fos,null);
                 fos.close();
