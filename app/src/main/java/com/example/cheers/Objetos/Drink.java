@@ -6,20 +6,21 @@ public class Drink {
     private int id;
     private String name;
     private String instructions;
+    private HashMap<String, Integer> ingredients;
 
 
     public Drink() {
         this.id = 0;
         this.name = "";
         this.instructions = "";
-
+        this.ingredients = new HashMap<String, Integer>();
     }
 
     public Drink(int id, String name, String instructions, HashMap<String, Integer> ingredients) {
         this.id = id;
         this.name = name;
         this.instructions = instructions;
-
+        this.ingredients = ingredients;
     }
 
     public int getId() {
@@ -46,4 +47,10 @@ public class Drink {
         this.instructions = instructions;
     }
 
+    public void parseIngredients(HashMap ingredients){
+        this.ingredients = ingredients;
+        String string = ingredients.toString();
+        String s = string.replaceAll("[^a-zA-Z0-9=,]", "");
+        byte[] b = s.getBytes();
+    }
 }
