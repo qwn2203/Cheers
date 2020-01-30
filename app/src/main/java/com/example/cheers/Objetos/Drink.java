@@ -10,7 +10,6 @@ public class Drink {
     private String name;
     private String instructions;
     private HashMap<String, Integer> ingredients;
-    ConnectionThread thread;
     BluetoothConnectionManager manager;
 
 
