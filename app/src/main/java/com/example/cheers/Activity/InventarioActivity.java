@@ -21,7 +21,7 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
     private ArrayList<String> alcohol;
     private ArrayList<String> mixers;
 
-    private Spinner spinnerAlcohol1;
+    private Spinner spinnerAlcohol1, spinnerAlcohol2,spinnerAlcohol3;
 
 
 
@@ -35,6 +35,8 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         mixers = new ArrayList<>();
 
         spinnerAlcohol1 = findViewById(R.id.spinnerAlcohol1);
+        spinnerAlcohol2 = findViewById(R.id.spinnerAlcohol2);
+        spinnerAlcohol3 = findViewById(R.id.spinnerAlcohol3);
 
         buildSpinners();
 
@@ -64,9 +66,11 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         //Separate ingredients from alcohol and mixers
         getAlcohol();
         getMixers();
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>( this, android.R.layout.simple_spinner_item, alcohol);
         spinnerAlcohol1.setAdapter(adapter);
+        spinnerAlcohol2.setAdapter(adapter);
+        spinnerAlcohol3.setAdapter(adapter);
+
 
     }
 
