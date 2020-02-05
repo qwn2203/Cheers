@@ -37,8 +37,8 @@ import java.util.Properties;
 
 public class DrinkAdapter extends  RecyclerView.Adapter {
     ArrayList<DrinkIngredient> list = new ArrayList<>();
-    static Context context;
-    static int pos;
+    private static Context context;
+    static int id;
 
     static Properties dispenser = new Properties();
     private static final String DISPENSER_FILENAME = "dispenser.xml";
@@ -59,10 +59,10 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        pos = list.get(position).getId();
+        id = list.get(position).getId();
         final DrinkViewHolder alcoholHolder = (DrinkViewHolder)holder;
         alcoholHolder.name.setText(list.get(position).getNameDrink());
-        if(LoadFavorites.favorites.getProperty("D"+pos) != null){
+        if(LoadFavorites.favorites.getProperty("D"+id) != null){
             alcoholHolder.heart.setImageResource(R.drawable.favorite);
         } else {
             alcoholHolder.heart.setImageResource(R.drawable.favorite_empty);
@@ -70,13 +70,13 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
         alcoholHolder.heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tmp = LoadFavorites.favorites.getProperty("D"+pos);
+                String tmp = LoadFavorites.favorites.getProperty("D"+id);
                 if(tmp == null){
-                    LoadFavorites.favorites.setProperty("D"+pos,Integer.toString(pos));
+                    LoadFavorites.favorites.setProperty("D"+id,Integer.toString(id));
                     alcoholHolder.heart.setImageResource(R.drawable.favorite);
 
                 } else if(tmp != null){
-                    LoadFavorites.favorites.remove("D"+pos);
+                    LoadFavorites.favorites.remove("D"+id);
                     alcoholHolder.heart.setImageResource(R.drawable.favorite_empty);
                 }
                 LoadFavorites.saveFavorites();
@@ -85,8 +85,10 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
         alcoholHolder.info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Prueba", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(context, DrinkInformationActivity.class);
+                System.out.println("Posicion: " + position);
+                System.out.println("Bebida " + position + " " +list.get(position).getId() + ": " + list.get(position).getNameDrink());
+                System.out.println("Size of the ingredients: " + list.get(position).getIngredient().size());
                 i.putExtra("drink", list.get(position));
                 context.startActivity(i);
             }
@@ -108,6 +110,9 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
                                 if(tmp){
                                     HashMap<String, Integer> amount = DrinkAdapter.assignBumpers(list.get(position));
                                     new Drink(0,null,null,null).parseIngredients(amount);
+                                } else {
+                                    System.out.println("No se encuentran todos los elementos en Stock");
+                                    Toast.makeText(context, "Cannot prepare drink, because not all ingredients are in stock", Toast.LENGTH_SHORT).show();
                                 }
 
                             }
@@ -128,7 +133,7 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
     }
 
     private static HashMap<String, Integer> assignBumpers(DrinkIngredient d){
-        /*ArrayList<Integer> tmp = new ArrayList<>();
+        ArrayList<Integer> tmp = new ArrayList<>();
         ArrayList<String> bumpers = new ArrayList<>();
         HashMap<String, Integer> ing = new HashMap<>();
         ArrayList<Ingredients> ingredients = new ArrayList<>(d.getIngredient());
@@ -144,7 +149,7 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
             bumpers.add(key);
             tmp.add(Integer.parseInt(value));
         }
-        System.out.println("EMPIEZA CICLO:" + ingredients.size() + ", " + tmp.size());
+        /*System.out.println("EMPIEZA CICLO:" + ingredients.size() + ", " + tmp.size());
         for(int i = 0; i < bumpers.size(); i++){
             System.out.println("B: " + bumpers.get(i) + " --> " + tmp.get(i));
         }
@@ -152,12 +157,8 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
         System.out.println("HASHMAP" + ing);
 
         return false;*/
-        HashMap<String, Integer> tmp = new HashMap<>();
-        tmp.put("d1", 23);
-        tmp.put("d2", 30);
-        tmp.put("d3", 25);
-        tmp.put("p1",11);
-        return tmp;
+
+        return ing;
     }
 
     private static boolean checkStock(DrinkIngredient d){

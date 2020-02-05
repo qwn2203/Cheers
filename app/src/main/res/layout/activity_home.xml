@@ -57,7 +57,7 @@
             app:cardElevation="8dp"
             android:focusable="true">
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:drawableTop="@drawable/favorite"
@@ -89,7 +89,7 @@
 
             <TextView
                 android:id="@+id/bebidasText"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:drawableTop="@drawable/bebida"
@@ -118,10 +118,10 @@
             app:cardElevation="8dp"
             android:focusable="true">
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
-                android:drawableTop="@drawable/mas"
+                android:drawableTop="@drawable/ic_add2"
                 android:id="@+id/crearText"
                 android:orientation="vertical"
                 android:padding="5dp"
@@ -147,7 +147,7 @@
             app:cardElevation="8dp"
             android:focusable="true">
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:drawableTop="@drawable/inventario"

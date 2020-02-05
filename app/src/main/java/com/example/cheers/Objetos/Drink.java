@@ -2,9 +2,10 @@ package com.example.cheers.Objetos;
 
 import com.example.cheers.BluetoothConnectionManager;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Drink {
+public class Drink implements Serializable {
     private int id;
     private String name;
     private String instructions;

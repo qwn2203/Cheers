@@ -42,7 +42,7 @@
             android:layout_marginBottom="8dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Please, select all the alcohol and mixers you want, but you can't pass the 100% of the cup. Enjoy!"
+            android:text="Please, select all the alcohol (3) and mixers (5) you want, but you can't pass the 100% of the cup. Enjoy!"
             android:textColor="@android:color/black"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"

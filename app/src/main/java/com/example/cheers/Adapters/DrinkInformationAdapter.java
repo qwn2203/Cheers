@@ -38,11 +38,9 @@ public class DrinkInformationAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         DrinkInformationViewHolder drinkViewHolder = (DrinkInformationViewHolder) holder;
         drinkViewHolder.name.setText(ingredients.get(position).getName());
-        drinkViewHolder.imageView.setImageResource((ingredients.get(position).getType() == 0) ? R.drawable.champagne : R.drawable.soda);
-        drinkViewHolder.percentage.setText(amountIngredients.get(position) + "%");
+        drinkViewHolder.imageView.setImageResource((ingredients.get(position).getType() == 0) ? R.drawable.champagne: R.drawable.soda);
         drinkViewHolder.progressBar.setProgress(amountIngredients.get(position));
-
-        System.out.println(ingredients.get(position).getName() + ": " + ingredients.get(position).getType() + " --> " + amountIngredients.get(position));
+        drinkViewHolder.percentage.setText(amountIngredients.get(position) + "%");
 
 
     }

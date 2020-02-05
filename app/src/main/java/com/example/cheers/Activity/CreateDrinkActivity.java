@@ -97,7 +97,7 @@ public class CreateDrinkActivity extends AppCompatActivity {
 
     public void loadDrinks(View v){
         int totalSum = 0;
-        String n = nameDrink.getText().toString().trim();
+        String n = nameDrink.getText().toString().toLowerCase().trim();
         String d = descriptionDrink.getText().toString().trim();
         //Makes the sum through and Iterator of all percentages of the ingredients
         Iterator<Map.Entry<Integer, Integer>> it = percentageIng.entrySet().iterator();
@@ -123,11 +123,15 @@ public class CreateDrinkActivity extends AppCompatActivity {
             return;
         } else {
             int id = handler.addDrinkReturnId(n,d);
+            System.out.println("ID de la bebida es: " + id);
             it = percentageIng.entrySet().iterator();
+
+            System.out.println("HASHMAP NEW DRINK: " + percentageIng);
 
             while (it.hasNext()) {
                 Map.Entry<Integer, Integer> pair = it.next();
                 handler.addIngredientAndDrink(id,pair.getKey(),pair.getValue());
+                System.out.println("Adding ingredient to drink: " + id + " ingredient: " + pair.getKey() + ", amount: " + pair.getValue());
             }
             Toast.makeText(this, "Total Sum --> " + totalSum, Toast.LENGTH_SHORT).show();
             Toast.makeText(this, "Drink Created" + totalSum, Toast.LENGTH_SHORT).show();

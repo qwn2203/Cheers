@@ -18,10 +18,10 @@ public class IngredientViewHolder extends RecyclerView.ViewHolder {
 
     public IngredientViewHolder(@NonNull View itemView) {
         super(itemView);
-        name = itemView.findViewById(R.id.nameTextView);
-        image = itemView.findViewById(R.id.typeImageView);
-        percentage = itemView.findViewById(R.id.percentageInfo);
-        seekBar = itemView.findViewById(R.id.progressBar);
+        name = itemView.findViewById(R.id.nameInformation);
+        image = itemView.findViewById(R.id.typeInformation);
+        percentage = itemView.findViewById(R.id.percentageInformation);
+        seekBar = itemView.findViewById(R.id.progressBarInformation);
 
 
     }

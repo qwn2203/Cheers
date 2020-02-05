@@ -18,9 +18,9 @@ public class DrinkInformationViewHolder extends RecyclerView.ViewHolder {
 
     public DrinkInformationViewHolder(@NonNull View itemView) {
         super(itemView);
-        imageView = itemView.findViewById(R.id.typeImageView);
-        name = itemView.findViewById(R.id.nameTextView);
-        progressBar = itemView.findViewById(R.id.progressBar);
-        percentage = itemView.findViewById(R.id.percentageInfo);
+        imageView = itemView.findViewById(R.id.typeInformation);
+        name = itemView.findViewById(R.id.nameInformation);
+        progressBar = itemView.findViewById(R.id.progressBarInformation);
+        percentage = itemView.findViewById(R.id.percentageInformation);
     }
 }
