@@ -1,7 +1,6 @@
 package com.example.cheers.Objetos;
 
 import com.example.cheers.BluetoothConnectionManager;
-import com.example.cheers.ConnectionThread;
 
 import java.util.HashMap;
 
@@ -55,7 +54,10 @@ public class Drink {
         this.ingredients = ingredients;
         String string = ingredients.toString();
         String s = string.replaceAll("[^a-zA-Z0-9=,]", "");
-        byte[] b = s.getBytes();
+        String br = "\n";
+        String f = s.concat(br);
+        byte[] b = f.getBytes();
+        System.out.println(b);
         manager.send(b);
     }
 }
