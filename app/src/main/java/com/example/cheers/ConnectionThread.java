@@ -51,7 +51,7 @@ public class ConnectionThread extends Thread{
     public void write(byte[]bytes){
         try{
             Log.i("[THREAD_CT]", "Writting bytes");
-            outs.write(bytes);;
+            outs.write(bytes);
         } catch (IOException ioe){
             ioe.printStackTrace();
         }
