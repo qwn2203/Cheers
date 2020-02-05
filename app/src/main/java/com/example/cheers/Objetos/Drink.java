@@ -58,6 +58,7 @@ public class Drink {
         String f = s.concat(br);
         byte[] b = f.getBytes();
         System.out.println(b);
+        manager = BluetoothConnectionManager.getInstance("");
         manager.send(b);
     }
 }

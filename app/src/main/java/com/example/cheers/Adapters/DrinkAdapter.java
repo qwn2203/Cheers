@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cheers.Activity.DrinkInformationActivity;
 import com.example.cheers.Activity.InventarioActivity;
 import com.example.cheers.LoadFavorites;
+import com.example.cheers.Objetos.Drink;
 import com.example.cheers.Objetos.DrinkIngredient;
 import com.example.cheers.Objetos.Ingredients;
 import com.example.cheers.R;
@@ -106,7 +107,7 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
                                 boolean tmp = DrinkAdapter.checkStock(list.get(position));
                                 if(tmp){
                                     HashMap<String, Integer> amount = DrinkAdapter.assignBumpers(list.get(position));
-
+                                    new Drink(0,null,null,null).parseIngredients(amount);
                                 }
 
                             }
