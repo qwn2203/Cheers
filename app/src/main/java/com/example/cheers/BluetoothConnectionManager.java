@@ -67,4 +67,15 @@ public class BluetoothConnectionManager {
             thread.write(message.getBytes());
         }
     }
+
+    public void send(byte[] b){
+        if (socket.isConnected()&& thread!=null){
+            try{
+                socket.getOutputStream().write(b);
+            }
+            catch (IOException ioe){
+                ioe.printStackTrace();
+            }
+        }
+    }
 }

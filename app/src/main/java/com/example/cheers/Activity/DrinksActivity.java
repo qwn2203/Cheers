@@ -38,6 +38,5 @@ public class DrinksActivity extends AppCompatActivity {
         alcohols.add(new Drink(1, "Bebida 1", "Instrucciones 1", null));
         alcohols.add(new Drink(2, "Bebida 2", "Instrucciones 2", null));
         alcohols.add(new Drink(3, "Bebida 3", "Instrucciones 3", null));
-
     }
 }
