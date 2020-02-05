@@ -1,10 +1,8 @@
 package com.example.cheers.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,16 +10,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.cheers.NewIngredientDialog;
+import com.example.cheers.Objetos.DrinkIngredient;
 import com.example.cheers.Objetos.Ingredients;
 import com.example.cheers.R;
-import com.example.cheers.StockAdapter;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -30,6 +31,7 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
     private ArrayList<String> mixersString;
     public static ArrayList<Ingredients> alcohol;
     public static ArrayList<Ingredients> mixers;
+
 
 
     private Spinner spinnerAlcohol1, spinnerAlcohol2,spinnerAlcohol3;
@@ -74,7 +76,8 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
     }
 
     public void savePreferences(View v){
-        System.out.println("PASSAAAAA ENTRADA");
+        System.out.println("PASSAAAAA ENTRADA" + dispenser);
+        System.out.println("PASSAAAAA ENTRADA" + disp);
         for(int i = 1; i <= 3; i++){
             if(disp.get("dispenser"+i) == 0){
                 Toast.makeText(this, "Please, select any alcohol in the Dispenser #"+i, Toast.LENGTH_LONG).show();
@@ -99,14 +102,17 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         } catch (IOException ioe) {
             Toast.makeText(this, "No se puede guardar los ingredientes.", Toast.LENGTH_LONG).show();
         }
-        System.out.println("PASSAAAAA SALIDA");
+        Toast.makeText(this, "Saved Changes", Toast.LENGTH_LONG).show();
+        Intent i = new Intent(this, homeActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 
     public void spinnerListeners(){
         spinnerAlcohol1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                disp.put("dispenser1",i);
+                disp.put("dispenser1",alcohol.get(i).getId());
             }
 
             @Override
@@ -117,7 +123,7 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         spinnerAlcohol2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                disp.put("dispenser2",i);
+                disp.put("dispenser2",alcohol.get(i).getId());
             }
 
             @Override
@@ -128,7 +134,7 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         spinnerAlcohol3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                disp.put("dispenser3",i);
+                disp.put("dispenser3",alcohol.get(i).getId());
             }
 
             @Override
@@ -139,7 +145,7 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         spinnerMixer1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                disp.put("pump1",i);
+                disp.put("pump1",mixers.get(i).getId());
             }
 
             @Override
@@ -150,7 +156,7 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         spinnerMixer2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                disp.put("pump2",i);
+                disp.put("pump2",mixers.get(i).getId());
             }
 
             @Override
@@ -161,7 +167,7 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         spinnerMixer3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                disp.put("pump3",i);
+                disp.put("pump3",mixers.get(i).getId());
             }
 
             @Override
@@ -172,7 +178,7 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         spinnerMixer4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                disp.put("pump4",i);
+                disp.put("pump4",mixers.get(i).getId());
             }
 
             @Override
@@ -183,7 +189,7 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         spinnerMixer5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                disp.put("pump5",i);
+                disp.put("pump5",mixers.get(i).getId());
             }
 
             @Override
@@ -194,6 +200,8 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
     }
 
     public void getAlcohol(){
+        alcohol.clear();
+        alcoholString.clear();
         for(int i = 0; i < MainActivity.ingredients.size(); i++)
             if(MainActivity.ingredients.get(i).getType() == 0){
                 alcoholString.add(MainActivity.ingredients.get(i).getName());
@@ -209,6 +217,8 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
     }
 
     public void getMixers(){
+        mixers.clear();
+        mixersString.clear();
         for(int i=0; i < MainActivity.ingredients.size(); i++) {
             if (MainActivity.ingredients.get(i).getType() == 1) {
                 mixers.add(MainActivity.ingredients.get(i));
@@ -237,6 +247,7 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         //Separate ingredients from alcohol and mixers
         getAlcohol();
         getMixers();
+
         ArrayAdapter<String> adapterAlcohol = new ArrayAdapter<String>( this, android.R.layout.simple_spinner_item, alcoholString);
         spinnerAlcohol1.setAdapter(adapterAlcohol);
         spinnerAlcohol2.setAdapter(adapterAlcohol);
@@ -308,4 +319,6 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         }
 
     }
+
+
 }

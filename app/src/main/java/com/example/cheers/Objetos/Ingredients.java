@@ -1,6 +1,8 @@
 package com.example.cheers.Objetos;
 
-public class Ingredients {
+import java.io.Serializable;
+
+public class Ingredients implements Serializable {
     private int id;
     private String name;
     private int type;

@@ -1,5 +1,6 @@
 package com.example.cheers.Activity;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,21 +8,22 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.cheers.DBHandler;
+import com.example.cheers.LoadFavorites;
 import com.example.cheers.Objetos.DrinkIngredient;
 import com.example.cheers.Objetos.Ingredients;
 import com.example.cheers.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends Activity {
 
     public Button btnScanner;
-    public static List<DrinkIngredient> drinks;
-    public static List<Ingredients> ingredients;
+    public static ArrayList<DrinkIngredient> drinks;
+    public static ArrayList< Ingredients > ingredients;
     public static DBHandler handler;
 
+    LoadFavorites favorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,9 @@ public class MainActivity extends Activity {
         ingredients = new ArrayList<>();
         handler = new DBHandler(this,null,null,1);
         loadData();
+
+        favorites = new LoadFavorites(this);
+        favorites.loadFavorites();
     }
 
     @Override
@@ -40,9 +45,9 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         //IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         //if(result != null){
-            Intent intent = new Intent(MainActivity.this, homeActivity.class);
-            startActivity(intent);
-            finish();
+        Intent intent = new Intent(MainActivity.this, homeActivity.class);
+        startActivity(intent);
+        finish();
         //}
     }
 
@@ -56,5 +61,18 @@ public class MainActivity extends Activity {
 
         //fill data in ArrayList
         ingredients.addAll(handler.getIngredients());
+
+        if(ingredients.isEmpty()){
+            handler.addIngredient("Ron",0);
+            handler.addIngredient("Vino Tinto",0);
+            handler.addIngredient("Mezcal",0);
+            handler.addIngredient("Agua Mineral",1);
+            handler.addIngredient("Agua Tónica",1);
+            handler.addIngredient("Jugo de Uva",1);
+            handler.addIngredient("Jarabe",1);
+            handler.addIngredient("Jugo de Limón",1);
+            ingredients.clear();
+            ingredients.addAll(handler.getIngredients());
+        }
     }
 }

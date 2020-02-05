@@ -1,11 +1,12 @@
 package com.example.cheers.Activity;
 
-import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.cardview.widget.CardView;
 
 import com.example.cheers.R;
 
@@ -41,13 +42,6 @@ public class homeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(homeActivity.this, CreateDrinkActivity.class);
-                startActivity(i);
-            }
-        });
-        favoritos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(homeActivity.this, FavoritesActivity.class);
                 startActivity(i);
             }
         });

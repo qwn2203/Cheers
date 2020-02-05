@@ -1,15 +1,16 @@
 package com.example.cheers.Objetos;
 
+
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-public class DrinkIngredient {
+public class DrinkIngredient implements Serializable {
     private Drink drink;
-    private List<Ingredients> ingredient;
-    private List<Integer> percentage;
+    private ArrayList<Ingredients> ingredient;
+    private ArrayList<Integer> percentage;
 
-    public DrinkIngredient(Drink drink) {
-        this.drink = drink;
+    public DrinkIngredient(Drink d) {
+        this.drink = d;
         this.ingredient = new ArrayList<>();
         this.percentage = new ArrayList<>();
     }
@@ -22,19 +23,32 @@ public class DrinkIngredient {
         this.drink = drink;
     }
 
-    public List<Ingredients> getIngredient() {
+    public ArrayList<Ingredients> getIngredient() {
         return ingredient;
     }
 
-    public void setIngredient(List<Ingredients> ingredient) {
+    public void setIngredient(ArrayList<Ingredients> ingredient) {
         this.ingredient = ingredient;
     }
 
-    public List<Integer> getPercentage() {
+    public ArrayList<Integer> getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(List<Integer> percentage) {
+    public void setPercentage(ArrayList<Integer> percentage) {
         this.percentage = percentage;
     }
+
+    public int getId(){
+        return this.drink.getId();
+    }
+
+    public String getNameDrink(){
+        return this.drink.getName();
+    }
+
+    public String getDescriptionDrink(){
+        return this.drink.getInstructions();
+    }
+
 }

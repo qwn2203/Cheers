@@ -11,7 +11,7 @@ import com.example.cheers.R;
 
 public class splashActivity extends Activity {
 
-    private final int DURACION_SPLASH = 3000;
+    private final int DURACION_SPLASH = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
