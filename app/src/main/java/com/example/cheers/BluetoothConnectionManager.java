@@ -54,7 +54,7 @@ public class BluetoothConnectionManager {
             thread= new ConnectionThread(socket,handler);
             thread.start();
         }
-    };
+    }
 
     public static BluetoothConnectionManager getInstance(String mac) {
         if(INSTANCE == null)

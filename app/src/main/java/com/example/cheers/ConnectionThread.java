@@ -17,6 +17,7 @@ public class ConnectionThread extends Thread{
     private  OutputStream outs;
     public static final int RESPONSE_MESSAGE=10;
     Handler handler;
+    final int RECIEVE_MESSAGE = 1;
 
     public ConnectionThread(BluetoothSocket socket, Handler handler){
         this.socket=socket;
@@ -34,6 +35,8 @@ public class ConnectionThread extends Thread{
     }
     public void run (){
         BufferedReader br= new BufferedReader(new InputStreamReader(ins));
+        byte[] buffer = new byte[256];
+        int bytes;
         Log.i("[THREAD_CT]", "Running thread");
         while (true)
             try{
@@ -41,6 +44,8 @@ public class ConnectionThread extends Thread{
                 Message message=new Message();
                 message.what= RESPONSE_MESSAGE;
                 message.obj=resp;
+                bytes = ins.read(buffer);
+                handler.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();
                 handler.sendMessage(message);
             }catch (IOException ioe){
                 ioe.printStackTrace();

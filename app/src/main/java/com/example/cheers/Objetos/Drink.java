@@ -50,14 +50,15 @@ public class Drink {
         this.instructions = instructions;
     }
 
-    public void parseIngredients(HashMap ingredients){
+    public void parseIngredients(HashMap<String, Integer> ingredients){
         this.ingredients = ingredients;
         String string = ingredients.toString();
         String s = string.replaceAll("[^a-zA-Z0-9=,]", "");
         String br = "\n";
         String f = s.concat(br);
         byte[] b = f.getBytes();
-        System.out.println(b);
+        manager = BluetoothConnectionManager.getInstance("98:D3:31:20:4D:8E");
         manager.send(b);
+        System.out.println(b);
     }
 }
