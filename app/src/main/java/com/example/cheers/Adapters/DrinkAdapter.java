@@ -9,9 +9,11 @@ import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cheers.Activity.DrinkInformationActivity;
 import com.example.cheers.Activity.InventarioActivity;
+import com.example.cheers.DBHandler;
 import com.example.cheers.LoadFavorites;
 import com.example.cheers.Objetos.DrinkIngredient;
 import com.example.cheers.Objetos.Ingredients;
@@ -192,6 +195,7 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //HERE GOES THE BLUETOOTH CONNECTION
+
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
