@@ -2,9 +2,10 @@ package com.example.cheers.Objetos;
 
 import com.example.cheers.BluetoothConnectionManager;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Drink {
+public class Drink implements Serializable {
     private int id;
     private String name;
     private String instructions;
@@ -50,7 +51,7 @@ public class Drink {
         this.instructions = instructions;
     }
 
-    public void parseIngredients(HashMap<String, Integer> ingredients){
+    public void parseIngredients(HashMap ingredients){
         this.ingredients = ingredients;
         String string = ingredients.toString();
         String s = string.replaceAll("[^a-zA-Z0-9=,]", "");

@@ -19,9 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cheers.Activity.DrinkInformationActivity;
 import com.example.cheers.Activity.InventarioActivity;
-import com.example.cheers.BluetoothConnectionManager;
 import com.example.cheers.LoadFavorites;
-import com.example.cheers.Objetos.Drink;
 import com.example.cheers.Objetos.DrinkIngredient;
 import com.example.cheers.Objetos.Ingredients;
 import com.example.cheers.R;
@@ -38,9 +36,9 @@ import java.util.Properties;
 
 public class DrinkAdapter extends  RecyclerView.Adapter {
     ArrayList<DrinkIngredient> list = new ArrayList<>();
-    static Context context;
-    static int pos;
-    Drink drink;
+    private static Context context;
+    static int id;
+    static boolean checkStock;
 
     static Properties dispenser = new Properties();
     private static final String DISPENSER_FILENAME = "dispenser.xml";
@@ -61,10 +59,10 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        pos = list.get(position).getId();
+        id = list.get(position).getId();
         final DrinkViewHolder alcoholHolder = (DrinkViewHolder)holder;
         alcoholHolder.name.setText(list.get(position).getNameDrink());
-        if(LoadFavorites.favorites.getProperty("D"+pos) != null){
+        if(LoadFavorites.favorites.getProperty("D"+id) != null){
             alcoholHolder.heart.setImageResource(R.drawable.favorite);
         } else {
             alcoholHolder.heart.setImageResource(R.drawable.favorite_empty);
@@ -72,13 +70,13 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
         alcoholHolder.heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tmp = LoadFavorites.favorites.getProperty("D"+pos);
+                String tmp = LoadFavorites.favorites.getProperty("D"+id);
                 if(tmp == null){
-                    LoadFavorites.favorites.setProperty("D"+pos,Integer.toString(pos));
+                    LoadFavorites.favorites.setProperty("D"+id,Integer.toString(id));
                     alcoholHolder.heart.setImageResource(R.drawable.favorite);
 
                 } else if(tmp != null){
-                    LoadFavorites.favorites.remove("D"+pos);
+                    LoadFavorites.favorites.remove("D"+id);
                     alcoholHolder.heart.setImageResource(R.drawable.favorite_empty);
                 }
                 LoadFavorites.saveFavorites();
@@ -89,6 +87,9 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
             public void onClick(View v) {
                 Toast.makeText(context, "Prueba", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(context, DrinkInformationActivity.class);
+                System.out.println("Posicion: " + position);
+                System.out.println("Bebida " + position + " " +list.get(position).getId() + ": " + list.get(position).getNameDrink());
+                System.out.println("Size of the ingredients: " + list.get(position).getIngredient().size());
                 i.putExtra("drink", list.get(position));
                 context.startActivity(i);
             }
@@ -106,9 +107,7 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
                         .setPositiveButton("Preprare Drink", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                //boolean tmp = DrinkAdapter.checkStock(list.get(position));
-                                    HashMap<String, Integer> amount = DrinkAdapter.assignBumpers(list.get(position));
-                                    new Drink(0,null,null,null).parseIngredients(amount);
+                                checkStock(list.get(position));
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -159,34 +158,47 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
         return tmp;
     }
 
-    private static boolean checkStock(DrinkIngredient d){
+    private void checkStock(DrinkIngredient d){
+        checkStock = false;
+        DBHandler handler = new DBHandler(context,null,null,0);
+        HashMap<String, Integer> hashMap = new HashMap<>();
+
+        String ingredients = "";
+        String message2 = "This ingredients were found in Stock:\n\n";
+        String messageConfirmation = "\n\nIf you agree to prepare this drink with the previous ingredients available, please press OK, and your drink will be prepared";
+
         loadIngredients();
-        ArrayList<Ingredients> ingredients = new ArrayList<>(d.getIngredient());
-        ArrayList<Integer> tmp = new ArrayList<>();
+
         Enumeration<String> enums = (Enumeration<String>) dispenser.propertyNames();
         while (enums.hasMoreElements()) {
             String key = enums.nextElement();
             String value = dispenser.getProperty(key);
-            tmp.add(Integer.parseInt(value));
-        }
-
-        for(int i = 0; i < tmp.size(); i++){
-            for(int j = 0; j < ingredients.size(); j++){
-                if(tmp.get(i) == ingredients.get(j).getId()){
-                    System.out.println(i + " Disp: " + tmp.get(i) + " --> (j = " + j + ")" + ingredients.get(j).getId());
-                    tmp.remove(i);
-                    ingredients.remove(j);
-                    i = j = 0;
-                    continue;
-                }
+            if(handler.findAmountById(d.getId(),Integer.parseInt(value)) != -1){
+                hashMap.put(key, handler.findAmountById(d.getId(),Integer.parseInt(value)));
+                ingredients += String.format("%s : %d%s\n", handler.findIngredientById(Integer.parseInt(value)).getName(), handler.findAmountById(d.getId(),Integer.parseInt(value)),"%");
             }
         }
-        if(ingredients.isEmpty()){
-            System.out.println("Se eliminaron todos los elementos");
-            return true;
-        }
 
-        return false;
+        TextView myMsg = new TextView(context);
+        myMsg.setText(message2 + ingredients + messageConfirmation);
+        myMsg.setGravity(Gravity.CENTER_HORIZONTAL);
+        myMsg.setTextColor(context.getResources().getColor(R.color.black));
+        myMsg.setPadding(6,0,6,0);
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setTitle("Ingredients available: ")
+                .setView(myMsg)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //HERE GOES THE BLUETOOTH CONNECTION
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
     }
 
     private static void loadIngredients(){

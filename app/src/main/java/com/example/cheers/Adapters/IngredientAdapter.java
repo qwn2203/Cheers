@@ -16,6 +16,7 @@ import com.example.cheers.Objetos.Ingredients;
 import com.example.cheers.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class IngredientAdapter extends RecyclerView.Adapter {
     ArrayList<Ingredients> ingredients = new ArrayList<>();
@@ -47,7 +48,9 @@ public class IngredientAdapter extends RecyclerView.Adapter {
                 ingredientViewHolder.percentage.setText(progress + "%");
                 if(progress == 0){
                     CreateDrinkActivity.percentageIng.remove(id);
+                    CreateDrinkActivity.typeIngredient.remove((ingredients.get(position).getType() == 0) ? position+100: position);
                 } else {
+                    CreateDrinkActivity.typeIngredient.put((ingredients.get(position).getType() == 0) ? position+100 : position, ingredients.get(position).getType());
                     CreateDrinkActivity.percentageIng.put(id,progress);
                     CreateDrinkActivity.updatePercentage();
                 }

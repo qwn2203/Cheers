@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.strictmode.SqliteObjectLeakedViolation;
 
 import androidx.annotation.Nullable;
 
@@ -50,7 +51,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public void addIngredient(String name, int type){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("name",name);
+        values.put("name",titleCaseConversion(name.trim().toLowerCase()));
         values.put("type",type);
         db.insert("ingredients",null,values);
         db.close();
@@ -59,8 +60,8 @@ public class DBHandler extends SQLiteOpenHelper {
     public void addDrink(String name, String description){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("name",name);
-        values.put("description",description);
+        values.put("name",titleCaseConversion(name.toLowerCase().trim()));
+        values.put("description",description.trim());
         db.insert("drinks",null,values);
         db.close();
     }
@@ -122,6 +123,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 int id_ingredient = cursor.getInt(cursor.getColumnIndex("Id"));
                 String nameIngredient = cursor.getString(cursor.getColumnIndex("Name"));
                 int typeIngredient = cursor.getInt(cursor.getColumnIndex("Type"));
+                System.out.println(id_ingredient + ": " + nameIngredient + " -> " + typeIngredient);
                 ingredients.add(new Ingredients(id_ingredient, nameIngredient, typeIngredient));
                 cursor.moveToNext();
             }
@@ -134,7 +136,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public int findIdDrinkByName(String name, String description){
         int id = -1;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM drinks WHERE name = \"" + name + "\" AND description = \"" + description + "\" LIMIT 1",null);
+        Cursor cursor = db.rawQuery("SELECT * FROM drinks WHERE name LIKE '%" + name + "%' AND description LIKE '%" + description + "%' LIMIT 1",null);
         if(cursor.moveToFirst()){
             id = cursor.getInt(cursor.getColumnIndex("id"));
         }
@@ -161,7 +163,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public int addDrinkReturnId(String name, String description){
-        String n = this.titleCaseConversion(name.toLowerCase().trim());
+        String n = titleCaseConversion(name.toLowerCase().trim());
         String d = description.trim();
         this.addDrink(n,d);
         return this.findIdDrinkByName(n,d);
@@ -201,5 +203,29 @@ public class DBHandler extends SQLiteOpenHelper {
     public boolean deleteDrink(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete("drinks",  "id =" + id, null) > 0;
+    }
+
+    public int findAmountById(int idDrink, int idIngredient){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM drinks_has_ingredients WHERE id_drink = " + idDrink + " AND id_ingredient = " + idIngredient + "; ",null);
+        if(cursor.moveToFirst()){
+            int percentage = cursor.getInt(cursor.getColumnIndex("amount"));
+            //System.out.println("("+idDrink + " --> " + idIngredient + "): " + percentage);
+            return percentage;
+        }
+        return -1;
+    }
+
+    public Ingredients findIngredientById(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM ingredients WHERE id = " + id + ";",null );
+        if(cursor.moveToFirst()){
+            int idIngredient = cursor.getInt(cursor.getColumnIndex("id"));
+            String nameIngredient = cursor.getString(cursor.getColumnIndex("name"));
+            int typeIngredient = cursor.getInt(cursor.getColumnIndex("type"));
+            return new Ingredients(idIngredient,nameIngredient,typeIngredient);
+        }
+        db.close();
+        return null;
     }
 }

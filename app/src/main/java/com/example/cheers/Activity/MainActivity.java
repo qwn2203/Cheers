@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
     public static ArrayList<DrinkIngredient> drinks;
     public static ArrayList< Ingredients > ingredients;
     public static DBHandler handler;
+    public static String MAC_ADDRESS;
 
     LoadFavorites favorites;
 
@@ -66,13 +67,22 @@ public class MainActivity extends Activity {
             handler.addIngredient("Ron",0);
             handler.addIngredient("Vino Tinto",0);
             handler.addIngredient("Mezcal",0);
+            handler.addIngredient("Ginebra",0);
+            handler.addIngredient("Brandy",0);
+            handler.addIngredient("Vodka",0);
             handler.addIngredient("Agua Mineral",1);
             handler.addIngredient("Agua Tónica",1);
             handler.addIngredient("Jugo de Uva",1);
             handler.addIngredient("Jarabe",1);
+            handler.addIngredient("Crema de Cacao",1);
+            handler.addIngredient("Nata Liquida",1);
             handler.addIngredient("Jugo de Limón",1);
             ingredients.clear();
             ingredients.addAll(handler.getIngredients());
+        }
+
+        for(int i = 0; i < ingredients.size(); i++){
+            System.out.println(ingredients.get(i).getId() + ": " + ingredients.get(i).getName() + " --> " + ingredients.get(i).getType());
         }
     }
 }

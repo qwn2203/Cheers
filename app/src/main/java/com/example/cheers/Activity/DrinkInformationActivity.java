@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -39,6 +40,8 @@ public class DrinkInformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setNull();
         setContentView(R.layout.activity_drink_information);
         mixerRecyclerView = findViewById(R.id.mixerRecycler);
         alcoholRecyclerView = findViewById(R.id.alcoholRecycler);
@@ -63,8 +66,23 @@ public class DrinkInformationActivity extends AppCompatActivity {
 
         loadCup();
         buildRecyclerViews();
+    }
 
-
+    public void setNull(){
+        mixerRecyclerView = null;
+        alcoholRecyclerView = null;
+        adapterAlcohol = null;
+        adapterMixer = null;
+        delete = null;
+        cup = null;
+        name = null;
+        instructions = null;
+        percentage = null;
+        drink = null;
+        mixer = null;
+        alcohol = null;
+        mixerAmount = null;
+        alcoholAmount = null;
     }
 
     public void loadCup(){
@@ -97,9 +115,9 @@ public class DrinkInformationActivity extends AppCompatActivity {
             if(ing.get(i).getType() == type) {
                 mixer.add(ing.get(i));
                 mixerAmount.add(amount.get(i));
+                System.out.println("Mixer: " + ing.get(i).getName() + ": " + amount.get(i));
             }
         }
-        System.out.println("MIXER " + mixer.size() + " --> " + mixerAmount.size());
     }
 
     public void loadAlcohol(ArrayList<Ingredients> ing, ArrayList<Integer> amount, int type){
@@ -107,9 +125,9 @@ public class DrinkInformationActivity extends AppCompatActivity {
             if(ing.get(i).getType() == type) {
                 alcohol.add(ing.get(i));
                 alcoholAmount.add(amount.get(i));
+                System.out.println("Alcohol: " + ing.get(i).getName() + ": " + amount.get(i));
             }
         }
-        System.out.println("ALCOHOL " + alcohol.size() + " --> " + alcoholAmount.size());
     }
 
     public void buildRecyclerViews(){

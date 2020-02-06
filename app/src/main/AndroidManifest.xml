@@ -12,10 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.DrinkInformationActivity"></activity>
-        <activity android:name=".Activity.InventarioActivity" />
-        <activity android:name=".Activity.DrinksActivity" />
-        <activity android:name=".Activity.FavoritesActivity" />
-        <activity android:name=".Activity.CreateDrinkActivity" />
+        <activity android:name=".Activity.InventarioActivity" android:parentActivityName=".Activity.homeActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".Activity.homeActivity"></meta-data>
+        </activity>
+        <activity android:name=".Activity.DrinksActivity" android:parentActivityName=".Activity.homeActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".Activity.homeActivity"></meta-data>
+        </activity>
+        <activity android:name=".Activity.FavoritesActivity" android:parentActivityName=".Activity.homeActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".Activity.homeActivity"></meta-data>
+        </activity>
+        <activity android:name=".Activity.CreateDrinkActivity" android:parentActivityName=".Activity.homeActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".Activity.homeActivity"></meta-data>
+        </activity>
         <activity
             android:name=".Activity.homeActivity"
             android:label="" />

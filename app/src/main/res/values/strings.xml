@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Cheers</string>
     <string name="home">HOME</string>
-    <string name="favoritos">Favoritos</string>
-    <string name="bebidas">Bebidas</string>
-    <string name="crear_bebidas">Crear Bebidas</string>
-    <string name="inventario">Inventario</string>
+    <string name="favoritos">Favorites</string>
+    <string name="bebidas">Drinks</string>
+    <string name="crear_bebidas">Create New Drinks</string>
+    <string name="inventario">Stock</string>
 
     <string-array name="types">
         <item>Select the type of drink</item>
