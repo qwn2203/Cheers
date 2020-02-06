@@ -9,9 +9,11 @@ import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +35,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 
 
@@ -40,6 +44,7 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
     ArrayList<DrinkIngredient> list = new ArrayList<>();
     private static Context context;
     static int id;
+    static boolean checkStock;
 
     static Properties dispenser = new Properties();
     private static final String DISPENSER_FILENAME = "dispenser.xml";
@@ -107,15 +112,7 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
                         .setPositiveButton("Preprare Drink", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                boolean tmp = checkStock(list.get(position));
-                                if(tmp){
-                                    HashMap<String, Integer> amount = DrinkAdapter.assignBumpers(list.get(position));
-                                    new Drink(0,null,null,null).parseIngredients(amount);
-                                } else {
-                                    System.out.println("No se encuentran todos los elementos en Stock");
-                                    Toast.makeText(context, "Cannot prepare drink, because not all ingredients are in stock", Toast.LENGTH_SHORT).show();
-                                }
-
+                                checkStock(list.get(position));
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -133,49 +130,47 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
         return list.size();
     }
 
-    private static HashMap<String, Integer> assignBumpers(DrinkIngredient d){
-        ArrayList<Integer> tmp = new ArrayList<>();
-        ArrayList<String> bumpers = new ArrayList<>();
-        HashMap<String, Integer> ing = new HashMap<>();
-        ArrayList<Ingredients> ingredients = new ArrayList<>(d.getIngredient());
-        ArrayList<Integer> amount = new ArrayList<>(d.getPercentage());
-
-        System.out.println("PROPERTIES: " + dispenser);
-
-        Enumeration<String> enums = (Enumeration<String>) dispenser.propertyNames();
-        while (enums.hasMoreElements()) {
-            String key = enums.nextElement();
-            String value = dispenser.getProperty(key);
-            System.out.println(key + " --> " + value);
-            bumpers.add(key);
-            tmp.add(Integer.parseInt(value));
-        }
-        /*System.out.println("EMPIEZA CICLO:" + ingredients.size() + ", " + tmp.size());
-        for(int i = 0; i < bumpers.size(); i++){
-            System.out.println("B: " + bumpers.get(i) + " --> " + tmp.get(i));
-        }
-        //Hace falta que se diferencie de los pump y los dispenser al evaluar el id
-        System.out.println("HASHMAP" + ing);
-
-        return false;*/
-
-        return ing;
-    }
-
-    private boolean checkStock(DrinkIngredient d){
+    private void checkStock(DrinkIngredient d){
+        checkStock = false;
         DBHandler handler = new DBHandler(context,null,null,0);
+        HashMap<String, Integer> hashMap = new HashMap<>();
+
+        String ingredients = "";
+        String message2 = "This ingredients were found in Stock:\n\n";
+        String messageConfirmation = "\n\nIf you agree to prepare this drink with the previous ingredients available, please press OK, and your drink will be prepared";
+
         loadIngredients();
 
         Enumeration<String> enums = (Enumeration<String>) dispenser.propertyNames();
         while (enums.hasMoreElements()) {
             String key = enums.nextElement();
             String value = dispenser.getProperty(key);
-            System.out.println("key: "+key + "  "+handler.findIngredientById(Integer.parseInt(value)).getName() + "       " + handler.findAmountById(d.getId(),Integer.parseInt(value)));
-
+            if(handler.findAmountById(d.getId(),Integer.parseInt(value)) != -1){
+                hashMap.put(key, handler.findAmountById(d.getId(),Integer.parseInt(value)));
+                ingredients += String.format("%s : %d%s\n", handler.findIngredientById(Integer.parseInt(value)).getName(), handler.findAmountById(d.getId(),Integer.parseInt(value)),"%");
+            }
         }
 
+        TextView myMsg = new TextView(context);
+        myMsg.setText(message2 + ingredients + messageConfirmation);
+        myMsg.setGravity(Gravity.CENTER_HORIZONTAL);
+        myMsg.setTextColor(context.getResources().getColor(R.color.black));
+        myMsg.setPadding(6,0,6,0);
 
-        return false;
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setTitle("Ingredients available: ")
+                .setView(myMsg)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //HERE GOES THE BLUETOOTH CONNECTION
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
     }
 
     private static void loadIngredients(){
