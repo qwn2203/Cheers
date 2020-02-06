@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
     public static ArrayList<DrinkIngredient> drinks;
     public static ArrayList< Ingredients > ingredients;
     public static DBHandler handler;
+    public static String MAC_ADDRESS;
 
     LoadFavorites favorites;
 

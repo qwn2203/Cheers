@@ -29,12 +29,14 @@ public class homeActivity extends Activity {
             public void onClick(View v) {
                 Intent i = new Intent(homeActivity.this, FavoritesActivity.class);
                 startActivity(i);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
         bebidas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(homeActivity.this, DrinksActivity.class);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 startActivity(i);
             }
         });
@@ -42,6 +44,7 @@ public class homeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(homeActivity.this, CreateDrinkActivity.class);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 startActivity(i);
             }
         });
@@ -49,6 +52,7 @@ public class homeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(homeActivity.this, InventarioActivity.class);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 startActivity(i);
             }
         });

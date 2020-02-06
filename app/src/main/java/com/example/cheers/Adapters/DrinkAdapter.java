@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cheers.Activity.DrinkInformationActivity;
 import com.example.cheers.Activity.InventarioActivity;
+import com.example.cheers.DBHandler;
 import com.example.cheers.LoadFavorites;
 import com.example.cheers.Objetos.Drink;
 import com.example.cheers.Objetos.DrinkIngredient;
@@ -106,7 +107,7 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
                         .setPositiveButton("Preprare Drink", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                boolean tmp = DrinkAdapter.checkStock(list.get(position));
+                                boolean tmp = checkStock(list.get(position));
                                 if(tmp){
                                     HashMap<String, Integer> amount = DrinkAdapter.assignBumpers(list.get(position));
                                     new Drink(0,null,null,null).parseIngredients(amount);
@@ -161,32 +162,18 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
         return ing;
     }
 
-    private static boolean checkStock(DrinkIngredient d){
+    private boolean checkStock(DrinkIngredient d){
+        DBHandler handler = new DBHandler(context,null,null,0);
         loadIngredients();
-        ArrayList<Ingredients> ingredients = new ArrayList<>(d.getIngredient());
-        ArrayList<Integer> tmp = new ArrayList<>();
+
         Enumeration<String> enums = (Enumeration<String>) dispenser.propertyNames();
         while (enums.hasMoreElements()) {
             String key = enums.nextElement();
             String value = dispenser.getProperty(key);
-            tmp.add(Integer.parseInt(value));
+            System.out.println("key: "+key + "  "+handler.findIngredientById(Integer.parseInt(value)).getName() + "       " + handler.findAmountById(d.getId(),Integer.parseInt(value)));
+
         }
 
-        for(int i = 0; i < tmp.size(); i++){
-            for(int j = 0; j < ingredients.size(); j++){
-                if(tmp.get(i) == ingredients.get(j).getId()){
-                    System.out.println(i + " Disp: " + tmp.get(i) + " --> (j = " + j + ")" + ingredients.get(j).getId());
-                    tmp.remove(i);
-                    ingredients.remove(j);
-                    i = j = 0;
-                    continue;
-                }
-            }
-        }
-        if(ingredients.isEmpty()){
-            System.out.println("Se eliminaron todos los elementos");
-            return true;
-        }
 
         return false;
     }

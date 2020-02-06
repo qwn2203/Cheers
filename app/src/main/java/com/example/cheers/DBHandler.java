@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.strictmode.SqliteObjectLeakedViolation;
 
 import androidx.annotation.Nullable;
 
@@ -202,5 +203,29 @@ public class DBHandler extends SQLiteOpenHelper {
     public boolean deleteDrink(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete("drinks",  "id =" + id, null) > 0;
+    }
+
+    public int findAmountById(int idDrink, int idIngredient){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM drinks_has_ingredients WHERE id_drink = " + idDrink + " AND id_ingredient = " + idIngredient + "; ",null);
+        if(cursor.moveToFirst()){
+            int percentage = cursor.getInt(cursor.getColumnIndex("amount"));
+            //System.out.println("("+idDrink + " --> " + idIngredient + "): " + percentage);
+            return percentage;
+        }
+        return -1;
+    }
+
+    public Ingredients findIngredientById(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM ingredients WHERE id = " + id + ";",null );
+        if(cursor.moveToFirst()){
+            int idIngredient = cursor.getInt(cursor.getColumnIndex("id"));
+            String nameIngredient = cursor.getString(cursor.getColumnIndex("name"));
+            int typeIngredient = cursor.getInt(cursor.getColumnIndex("type"));
+            return new Ingredients(idIngredient,nameIngredient,typeIngredient);
+        }
+        db.close();
+        return null;
     }
 }
