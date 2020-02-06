@@ -23,6 +23,7 @@ import com.example.cheers.Activity.DrinkInformationActivity;
 import com.example.cheers.Activity.InventarioActivity;
 import com.example.cheers.DBHandler;
 import com.example.cheers.LoadFavorites;
+import com.example.cheers.Objetos.Drink;
 import com.example.cheers.Objetos.DrinkIngredient;
 import com.example.cheers.Objetos.Ingredients;
 import com.example.cheers.R;
@@ -41,7 +42,7 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
     ArrayList<DrinkIngredient> list = new ArrayList<>();
     private static Context context;
     static int id;
-    static boolean checkStock;
+    static boolean checkStock, loadIngredientsCheck;
 
     static Properties dispenser = new Properties();
     private static final String DISPENSER_FILENAME = "dispenser.xml";
@@ -110,7 +111,29 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
                         .setPositiveButton("Preprare Drink", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                checkStock(list.get(position));
+                                loadIngredientsCheck = loadIngredients();
+                                if(!loadIngredientsCheck){
+                                    AlertDialog alertDialog = new AlertDialog.Builder(context).setTitle("Stock Empty")
+                                            .setMessage("The Stock is empty, please choose for each dispensers and pumpers the ingredients")
+                                            .setNegativeButton("Go to Stock", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent i = new Intent(context,InventarioActivity.class);
+                                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    context.startActivity(i);
+                                                }
+                                            }). setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                }
+                                            }).show();
+                                    return;
+                                } else {
+                                    //checkStock(list.get(position));
+                                }
+
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -128,49 +151,19 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
         return list.size();
     }
 
-    private static HashMap<String, Integer> assignBumpers(DrinkIngredient d){
-        /*ArrayList<Integer> tmp = new ArrayList<>();
-        ArrayList<String> bumpers = new ArrayList<>();
-        HashMap<String, Integer> ing = new HashMap<>();
-        ArrayList<Ingredients> ingredients = new ArrayList<>(d.getIngredient());
-        ArrayList<Integer> amount = new ArrayList<>(d.getPercentage());
-
-        System.out.println("PROPERTIES: " + dispenser);
-
-        Enumeration<String> enums = (Enumeration<String>) dispenser.propertyNames();
-        while (enums.hasMoreElements()) {
-            String key = enums.nextElement();
-            String value = dispenser.getProperty(key);
-            System.out.println(key + " --> " + value);
-            bumpers.add(key);
-            tmp.add(Integer.parseInt(value));
-        }
-        System.out.println("EMPIEZA CICLO:" + ingredients.size() + ", " + tmp.size());
-        for(int i = 0; i < bumpers.size(); i++){
-            System.out.println("B: " + bumpers.get(i) + " --> " + tmp.get(i));
-        }
-        //Hace falta que se diferencie de los pump y los dispenser al evaluar el id
-        System.out.println("HASHMAP" + ing);
-
-        return false;*/
-        HashMap<String, Integer> tmp = new HashMap<>();
-        tmp.put("d1", 23);
-        tmp.put("d2", 30);
-        tmp.put("d3", 25);
-        tmp.put("p1",11);
-        return tmp;
-    }
-
     private void checkStock(DrinkIngredient d){
         checkStock = false;
         DBHandler handler = new DBHandler(context,null,null,0);
-        HashMap<String, Integer> hashMap = new HashMap<>();
+        final HashMap<String, Integer> hashMap = new HashMap<>();
 
         String ingredients = "";
         String message2 = "This ingredients were found in Stock:\n\n";
         String messageConfirmation = "\n\nIf you agree to prepare this drink with the previous ingredients available, please press OK, and your drink will be prepared";
 
-        loadIngredients();
+        loadIngredientsCheck = loadIngredients();
+
+
+
 
         Enumeration<String> enums = (Enumeration<String>) dispenser.propertyNames();
         while (enums.hasMoreElements()) {
@@ -195,6 +188,8 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //HERE GOES THE BLUETOOTH CONNECTION
+                        new Drink(0,null,null,null).parseIngredients(hashMap);
+
 
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -205,16 +200,18 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
                 }).show();
     }
 
-    private static void loadIngredients(){
+    private static boolean loadIngredients(){
         try {
             FileInputStream fis = context.openFileInput(DISPENSER_FILENAME);
             dispenser.loadFromXML(fis);
             fis.close();
-
+            return true;
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
+            return false;
         } catch (IOException ioe) {
             Toast.makeText(context, "No se puede leer los ingredientes.", Toast.LENGTH_LONG).show();
+            return false;
         }
     }
 
