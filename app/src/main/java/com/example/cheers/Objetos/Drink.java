@@ -1,5 +1,6 @@
 package com.example.cheers.Objetos;
 
+import com.example.cheers.Activity.MainActivity;
 import com.example.cheers.BluetoothConnectionManager;
 
 import java.io.Serializable;
@@ -62,6 +63,7 @@ public class Drink implements Serializable {
         System.out.println("BUGG: " + f);
         byte[] b = f.getBytes();
         manager = BluetoothConnectionManager.getInstance("98:D3:31:20:4D:8E");
+        //manager = BluetoothConnectionManager.getInstance(MainActivity.MAC_ADDRESS);
         manager.send(b);
         System.out.println(b);
     }

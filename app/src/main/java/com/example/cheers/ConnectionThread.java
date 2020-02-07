@@ -5,6 +5,8 @@ import android.os.Message;
 import android.util.Log;
 import android.os.Handler;
 
+import com.example.cheers.Activity.MainActivity;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +35,7 @@ public class ConnectionThread extends Thread{
             ioe.printStackTrace();
         }
     }
+
     public void run (){
         BufferedReader br= new BufferedReader(new InputStreamReader(ins));
         byte[] buffer = new byte[256];
@@ -41,6 +44,9 @@ public class ConnectionThread extends Thread{
         while (true)
             try{
                 String resp= br.readLine();
+                if(resp.contains("ok!")){
+                    MainActivity.connectionSecured = true;
+                }
                 System.out.println("RESPONSE:" + resp);
                 Message message=new Message();
                 message.what= RESPONSE_MESSAGE;

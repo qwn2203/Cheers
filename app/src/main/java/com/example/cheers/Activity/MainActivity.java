@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.cheers.BluetoothConnectionManager;
 import com.example.cheers.DBHandler;
 import com.example.cheers.LoadFavorites;
 import com.example.cheers.Objetos.DrinkIngredient;
 import com.example.cheers.Objetos.Ingredients;
 import com.example.cheers.R;
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 
@@ -23,8 +25,11 @@ public class MainActivity extends Activity {
     public static ArrayList< Ingredients > ingredients;
     public static DBHandler handler;
     public static String MAC_ADDRESS;
+    BluetoothConnectionManager manager;
 
     LoadFavorites favorites;
+
+    public static boolean connectionSecured;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,20 +41,32 @@ public class MainActivity extends Activity {
         ingredients = new ArrayList<>();
         handler = new DBHandler(this,null,null,1);
         loadData();
-
+        connectionSecured = false;
         favorites = new LoadFavorites(this);
         favorites.loadFavorites();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == 0 || resultCode == -1){
+            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            finish();
+            startActivity(intent);
+        }
         super.onActivityResult(requestCode, resultCode, data);
-        //IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        //if(result != null){
-        Intent intent = new Intent(MainActivity.this, homeActivity.class);
-        startActivity(intent);
-        finish();
-        //}
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        MAC_ADDRESS = result.getContents();
+        manager = BluetoothConnectionManager.getInstance(MAC_ADDRESS);
+        String br = "\n";
+        String f = MAC_ADDRESS.concat(br);
+        byte[] b = f.getBytes();
+        manager.send(b);
+
+        if(result != null && resultCode == RESULT_OK && connectionSecured){
+                Intent intent = new Intent(MainActivity.this, homeActivity.class);
+                startActivity(intent);
+                //rfinish();
+        }
     }
 
     public void lector(View v){

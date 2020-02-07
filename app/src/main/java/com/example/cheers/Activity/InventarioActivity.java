@@ -376,7 +376,6 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
             dispenser.setProperty("d2","0");
             dispenser.setProperty("d3","0");
 
-
             try {
                 FileOutputStream fos = openFileOutput(DISPENSER_FILENAME, Context.MODE_PRIVATE);
                 dispenser.storeToXML(fos, null);
