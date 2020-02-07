@@ -2,20 +2,27 @@ package com.example.cheers.Activity;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cheers.DBHandler;
+import com.example.cheers.DeleteIngredientDialog;
 import com.example.cheers.NewIngredientDialog;
 import com.example.cheers.Objetos.DrinkIngredient;
 import com.example.cheers.Objetos.Ingredients;
 import com.example.cheers.R;
+
+import org.w3c.dom.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,13 +31,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 
-public class InventarioActivity extends AppCompatActivity implements NewIngredientDialog.NewIngredientDialogListener {
+public class InventarioActivity extends AppCompatActivity implements NewIngredientDialog.NewIngredientDialogListener, DeleteIngredientDialog.DeleteIngredientDialogListener {
     private ArrayList<String> alcoholString;
     private ArrayList<String> mixersString;
     public static ArrayList<Ingredients> alcohol;
     public static ArrayList<Ingredients> mixers;
+    public static int pos;
 
 
 
@@ -265,6 +274,59 @@ public class InventarioActivity extends AppCompatActivity implements NewIngredie
         NewIngredientDialog newIngredientDialog = new NewIngredientDialog();
         newIngredientDialog.show(getSupportFragmentManager(),"New Drink");
         loadIngredients();
+    }
+
+    public void deleteDrink(View v){
+        final DBHandler handler = new DBHandler(this,null,null,0);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(InventarioActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.deletedrink_dialog,null);
+        final List<String> spinnerArray =  handler.getIngredientsName();
+        final List<Ingredients> ing = handler.getIngredients();
+        spinnerArray.add(0,"Select an ingredient");
+        ing.add(0,new Ingredients(0,null,0));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, spinnerArray);
+
+        Spinner spinnerDelete = view.findViewById(R.id.deleteSpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerDelete.setAdapter(adapter);
+
+        spinnerDelete.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                pos = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        mBuilder.setView(view);
+        mBuilder.setTitle("Delete Ingredient");
+        mBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(pos == 0){
+                    Toast.makeText(InventarioActivity.this, "Please, select a valid ingredient", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if(pos != 0){
+                    System.out.println("ID: " + ing.get(pos).getId() + ", Name: " + ing.get(pos).getName());
+                    if(handler.deleteIngredientById(ing.get(pos).getId())){
+                        Toast.makeText(InventarioActivity.this, "Ingredient deleted succesfully!", Toast.LENGTH_SHORT).show();
+                        loadIngredients();
+                        Intent i = getIntent();
+                        finish();
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        startActivity(i);
+                    }
+
+                }
+            }
+        });
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
     }
 
     public void buildSpinners(){

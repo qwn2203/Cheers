@@ -26,7 +26,6 @@ import java.util.ArrayList;
 public class DrinkInformationActivity extends AppCompatActivity {
     RecyclerView mixerRecyclerView, alcoholRecyclerView;
     DrinkInformationAdapter adapterAlcohol, adapterMixer;
-
     Button delete;
     ImageView cup;
     TextView name, instructions, percentage;
@@ -41,7 +40,7 @@ public class DrinkInformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setNull();
+
         setContentView(R.layout.activity_drink_information);
         mixerRecyclerView = findViewById(R.id.mixerRecycler);
         alcoholRecyclerView = findViewById(R.id.alcoholRecycler);
@@ -66,23 +65,6 @@ public class DrinkInformationActivity extends AppCompatActivity {
 
         loadCup();
         buildRecyclerViews();
-    }
-
-    public void setNull(){
-        mixerRecyclerView = null;
-        alcoholRecyclerView = null;
-        adapterAlcohol = null;
-        adapterMixer = null;
-        delete = null;
-        cup = null;
-        name = null;
-        instructions = null;
-        percentage = null;
-        drink = null;
-        mixer = null;
-        alcohol = null;
-        mixerAmount = null;
-        alcoholAmount = null;
     }
 
     public void loadCup(){

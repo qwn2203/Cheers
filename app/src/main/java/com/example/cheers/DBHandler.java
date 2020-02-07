@@ -16,6 +16,7 @@ import com.example.cheers.Objetos.DrinkIngredient;
 import com.example.cheers.Objetos.Ingredients;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
     public static final String DB_NAME = "bebidas.db";
@@ -33,7 +34,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE);
         CREATE_TABLE = "CREATE TABLE drinks (id INTEGER PRIMARY KEY, name TEXT, description TEXT);";
         db.execSQL(CREATE_TABLE);
-        CREATE_TABLE = "CREATE TABLE drinks_has_ingredients (id_drink INTEGER, id_ingredient INTEGER, amount INTEGER,FOREIGN KEY (id_drink) REFERENCES drinks(id), FOREIGN KEY (id_ingredient) REFERENCES ingredients(id) ON DELETE CASCADE) ;";
+        CREATE_TABLE = "CREATE TABLE drinks_has_ingredients (id_drink INTEGER, id_ingredient INTEGER, amount INTEGER,FOREIGN KEY (id_drink) REFERENCES drinks(id) ON DELETE CASCADE, FOREIGN KEY (id_ingredient) REFERENCES ingredients(id) ON DELETE CASCADE) ;";
         db.execSQL(CREATE_TABLE);
     }
 
@@ -227,5 +228,26 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         db.close();
         return null;
+    }
+
+    public List<String> getIngredientsName(){
+        List<String> ingredients = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM ingredients;",null);
+        System.out.println("CURSOR: " + cursor.moveToFirst());
+        if(cursor.moveToFirst()){
+            while(cursor.isAfterLast() == false){
+                ingredients.add(cursor.getString(cursor.getColumnIndex("name")));
+                System.out.println("INGREDIENT: " + cursor.getString(cursor.getColumnIndex("name")));
+                cursor.moveToNext();
+            }
+        }
+        db.close();
+        return ingredients;
+    }
+
+    public boolean deleteIngredientById(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("ingredients",  "id =" + id, null) > 0;
     }
 }

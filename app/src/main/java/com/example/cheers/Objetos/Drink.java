@@ -57,6 +57,9 @@ public class Drink implements Serializable {
         String s = string.replaceAll("[^a-zA-Z0-9=,]", "");
         String br = "\n";
         String f = s.concat(br);
+        System.out.println("BUGG: " + f);
+        f = f.replaceAll("=",":");
+        System.out.println("BUGG: " + f);
         byte[] b = f.getBytes();
         manager = BluetoothConnectionManager.getInstance("98:D3:31:20:4D:8E");
         manager.send(b);

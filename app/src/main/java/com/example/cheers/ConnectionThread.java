@@ -41,6 +41,7 @@ public class ConnectionThread extends Thread{
         while (true)
             try{
                 String resp= br.readLine();
+                System.out.println("RESPONSE:" + resp);
                 Message message=new Message();
                 message.what= RESPONSE_MESSAGE;
                 message.obj=resp;
@@ -49,6 +50,7 @@ public class ConnectionThread extends Thread{
                 handler.sendMessage(message);
             }catch (IOException ioe){
                 ioe.printStackTrace();
+                break;
             }
     }
 

@@ -131,7 +131,7 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
                                             }).show();
                                     return;
                                 } else {
-                                    //checkStock(list.get(position));
+                                    checkStock(list.get(position));
                                 }
 
                             }
@@ -188,6 +188,7 @@ public class DrinkAdapter extends  RecyclerView.Adapter {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //HERE GOES THE BLUETOOTH CONNECTION
+                        System.out.println("HASHMAP ENVIADO: "+hashMap);
                         new Drink(0,null,null,null).parseIngredients(hashMap);
 
 
